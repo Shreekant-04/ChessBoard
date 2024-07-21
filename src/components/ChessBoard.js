@@ -62,7 +62,7 @@ const ChessBoard = () => {
     return () => {
       clearTimeout(timeout);
     };
-  }, [turn, moveList, game, autoMoveTimeout]);
+  }, [turn, moveList, game]);
 
   const onDrop = (sourceSquare, targetSquare) => {
     const legalMove = game
