@@ -14,6 +14,7 @@ const ChessBoard = () => {
   const [moveList, setMoveList] = useState([]);
   const [selectedSquare, setSelectedSquare] = useState(null);
   const [legalMoves, setLegalMoves] = useState([]);
+  const [capturedPieces, setCapturedPieces] = useState({ w: [], b: [] });
   const [autoMoveTimeout, setAutoMoveTimeout] = useState(null);
 
   const whiteTimer = useRef(null);
@@ -49,7 +50,7 @@ const ChessBoard = () => {
         const randomMove = moves[Math.floor(Math.random() * moves.length)];
         game.move(randomMove);
         setFen(game.fen());
-        setMoveList((prevMoveList) => [...prevMoveList, randomMove]);
+        setMoveList([...moveList, randomMove]);
         setTurn(game.turn());
         setSelectedSquare(null);
         setLegalMoves([]);
@@ -99,7 +100,7 @@ const ChessBoard = () => {
     }
 
     setFen(game.fen());
-    setMoveList((prevMoveList) => [...prevMoveList, move.san]);
+    setMoveList([...moveList, move.san]);
     setTurn(game.turn());
     setSelectedSquare(null);
     setLegalMoves([]);
@@ -116,7 +117,7 @@ const ChessBoard = () => {
     const move = game.undo();
     if (move) {
       setFen(game.fen());
-      setMoveList((prevMoveList) => prevMoveList.slice(0, -1));
+      setMoveList(moveList.slice(0, -1));
       setTurn(game.turn());
 
       if (move.captured) {
@@ -144,7 +145,7 @@ const ChessBoard = () => {
   return (
     <div className="h-screen flex flex-col md:flex-row justify-evenly gap-4 overflow-hidden p-4">
       <div className="flex-1 flex justify-center items-center h-full">
-        <div className="w-full max-w-md md:max-w-3xl h-full ml-8">
+        <div className="w-full max-w-md md:max-w-3xl h-full ml-8 	">
           <Chessboard
             position={fen}
             onPieceDrop={onDrop}
@@ -161,7 +162,7 @@ const ChessBoard = () => {
         </div>
       </div>
       <div className="flex-1 flex flex-col items-center overflow-auto mt-4">
-        <div className="flex items-center justify-evenly w-4/5 md:mt-0 md:ml-8">
+        <div className="flex items-center justify-evenly  w-4/5 md:mt-0 md:ml-8">
           <Timer label="White Timer" time={whiteTime} />
           <Timer label="Black Timer" time={blackTime} />
           <button
