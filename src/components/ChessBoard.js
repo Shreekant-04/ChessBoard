@@ -62,6 +62,7 @@ const ChessBoard = () => {
     return () => {
       clearTimeout(timeout);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [turn, moveList, game]);
 
   const onDrop = (sourceSquare, targetSquare) => {
